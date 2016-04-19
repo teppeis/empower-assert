@@ -1,0 +1,30 @@
+{
+  "name": "empower-assert",
+  "description": "Convert assert to power-assert",
+  "version": "1.0.0",
+  "author": "Teppei Sato <teppeis@gmail.com>",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "dependencies": {
+    "estraverse": "^4.2.0"
+  },
+  "devDependencies": {
+    "esprima": "^2.7.2",
+    "mocha": "^2.4.5"
+  },
+  "homepage": "https://github.com/teppeis/empower-assert",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/teppeis/empower-assert.git"
+  },
+  "bugs": {
+    "url": "https://github.com/teppeis/empower-assert/issues"
+  },
+  "keywords": [
+    "assert",
+    "power-assert"
+  ],
+  "license": "MIT"
+}
