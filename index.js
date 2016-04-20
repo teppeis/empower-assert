@@ -5,48 +5,49 @@ var Syntax = estraverse.Syntax;
 
 function empowerAssert(ast) {
   estraverse.traverse(ast, {
-    enter: function(node, parent) {
-      if (node.type === Syntax.AssignmentExpression) {
-        if (node.operator !== '=') {
-          return;
-        }
-        if (!isIdentifier(node.left, 'assert')) {
-          return;
-        }
-        if (!isRequireAssert(node.right)) {
-          return;
-        }
-        changeAssertToPowerAssert(node.right.arguments[0]);
-      }
-
-      if (node.type === Syntax.VariableDeclarator) {
-        if (!isIdentifier(node.id, 'assert')) {
-          return;
-        }
-        if (!isRequireAssert(node.init)) {
-          return;
-        }
-        changeAssertToPowerAssert(node.init.arguments[0]);
-      }
-
-      if (node.type === Syntax.ImportDeclaration) {
-        var source = node.source;
-        if (!source || source.type !== Syntax.Literal || source.value !== 'assert') {
-          return;
-        }
-        var firstSpecifier = node.specifiers[0];
-        if (!firstSpecifier || firstSpecifier.type !== Syntax.ImportDefaultSpecifier) {
-          return;
-        }
-        if (!isIdentifier(firstSpecifier.local, 'assert')) {
-          return;
-        }
-        changeAssertToPowerAssert(source);
-      }
-    }
+    enter: enter
   });
-
   return ast;
+}
+
+function enter(node, parent) {
+  if (node.type === Syntax.AssignmentExpression) {
+    if (node.operator !== '=') {
+      return;
+    }
+    if (!isIdentifier(node.left, 'assert')) {
+      return;
+    }
+    if (!isRequireAssert(node.right)) {
+      return;
+    }
+    changeAssertToPowerAssert(node.right.arguments[0]);
+  }
+
+  if (node.type === Syntax.VariableDeclarator) {
+    if (!isIdentifier(node.id, 'assert')) {
+      return;
+    }
+    if (!isRequireAssert(node.init)) {
+      return;
+    }
+    changeAssertToPowerAssert(node.init.arguments[0]);
+  }
+
+  if (node.type === Syntax.ImportDeclaration) {
+    var source = node.source;
+    if (!source || source.type !== Syntax.Literal || source.value !== 'assert') {
+      return;
+    }
+    var firstSpecifier = node.specifiers[0];
+    if (!firstSpecifier || firstSpecifier.type !== Syntax.ImportDefaultSpecifier) {
+      return;
+    }
+    if (!isIdentifier(firstSpecifier.local, 'assert')) {
+      return;
+    }
+    changeAssertToPowerAssert(source);
+  }
 }
 
 function changeAssertToPowerAssert(node) {
@@ -74,3 +75,4 @@ function isIdentifier(node, name) {
 }
 
 module.exports = empowerAssert;
+empowerAssert.enter = enter;
