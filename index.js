@@ -16,7 +16,7 @@ function empowerAssert(ast) {
         if (!isRequireAssert(node.right)) {
           return;
         }
-        changeAssertToPowerAssert(node.right);
+        changeAssertToPowerAssert(node.right.arguments[0]);
       }
 
       if (node.type === Syntax.VariableDeclarator) {
@@ -26,7 +26,22 @@ function empowerAssert(ast) {
         if (!isRequireAssert(node.init)) {
           return;
         }
-        changeAssertToPowerAssert(node.init);
+        changeAssertToPowerAssert(node.init.arguments[0]);
+      }
+
+      if (node.type === Syntax.ImportDeclaration) {
+        var source = node.source;
+        if (!source || source.type !== Syntax.Literal || source.value !== 'assert') {
+          return;
+        }
+        var firstSpecifier = node.specifiers[0];
+        if (!firstSpecifier || firstSpecifier.type !== Syntax.ImportDefaultSpecifier) {
+          return;
+        }
+        if (!isIdentifier(firstSpecifier.local, 'assert')) {
+          return;
+        }
+        changeAssertToPowerAssert(source);
       }
     }
   });
@@ -35,11 +50,7 @@ function empowerAssert(ast) {
 }
 
 function changeAssertToPowerAssert(node) {
-  var arg = node.arguments[0];
-  arg.value = 'power-assert';
-  if (arg.raw) {
-    arg.raw = "'power-assert'";
-  }
+  node.value = 'power-assert';
 }
 
 function isRequireAssert(node) {

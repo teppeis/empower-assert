@@ -3,7 +3,8 @@
 var assert = require('assert');
 var fs = require('fs');
 var path = require('path');
-var esprima = require('esprima');
+var espree = require('espree');
+var espurify = require('espurify');
 var empowerAssert = require('../');
 
 function testTransform(fixtureName, extraOptions, extraSuffix) {
@@ -12,10 +13,14 @@ function testTransform(fixtureName, extraOptions, extraSuffix) {
     var fixtureFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'fixture.js');
     var expectedFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'expected' + suffix + '.js');
     var fixtureSource = fs.readFileSync(fixtureFilepath).toString();
-    var fixtureAst = esprima.parse(fixtureSource);
-    var actualAst = empowerAssert(fixtureAst);
+    var parserOptions = {
+      ecmaVersion: 6,
+      sourceType: 'module'
+    };
+    var fixtureAst = espree.parse(fixtureSource, parserOptions);
+    var actualAst = espurify(empowerAssert(fixtureAst));
     var expectedSource = fs.readFileSync(expectedFilepath).toString();
-    var expectedAst = esprima.parse(expectedSource);
+    var expectedAst = espurify(espree.parse(expectedSource, parserOptions));
     assert.deepEqual(actualAst, expectedAst);
   });
 }
@@ -26,6 +31,6 @@ describe('empower-assert', function() {
   testTransform('commonjs_powerassert');
   testTransform('assignment');
   testTransform('assignment_singlevar');
-  // testTransform('es6module');
-  // testTransform('es6module_powerassert');
+  testTransform('es6module');
+  testTransform('es6module_powerassert');
 });
