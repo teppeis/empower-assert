@@ -21,6 +21,11 @@ function testTransform (fixtureName, extraOptions, extraSuffix) {
 }
 
 describe('empower-assert', function() {
-  testTransform('assignment');
   testTransform('commonjs');
+  testTransform('commonjs_singlevar');
+  testTransform('commonjs_powerassert');
+  testTransform('assignment');
+  testTransform('assignment_singlevar');
+  // testTransform('es6module');
+  // testTransform('es6module_powerassert');
 });

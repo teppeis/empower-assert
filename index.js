@@ -1,7 +1,6 @@
 'use strict';
 
 var estraverse = require('estraverse');
-var traverse = estraverse.traverse;
 var Syntax = estraverse.Syntax;
 
 function empowerAssert(ast) {
@@ -14,19 +13,10 @@ function empowerAssert(ast) {
         if (!isIdentifier(node.left, 'assert')) {
           return;
         }
-        var init = node.right;
-        if (!init || init.type !== Syntax.CallExpression) {
+        if (!isRequireAssert(node.right)) {
           return;
         }
-        if (!isIdentifier(init.callee, 'require')) {
-          return;
-        }
-        var arg = init.arguments[0];
-        if (!arg || arg.type !== Syntax.Literal || arg.value !== 'assert') {
-          return;
-        }
-        arg.value = 'power-assert';
-        arg.raw = "'power-assert'";
+        changeAssertToPowerAssert(node.right);
         return estraverse.VisitorOption.Skip;
       }
 
@@ -34,25 +24,38 @@ function empowerAssert(ast) {
         if (!isIdentifier(node.id, 'assert')) {
           return;
         }
-        var init = node.init;
-        if (!init || init.type !== Syntax.CallExpression) {
+        if (!isRequireAssert(node.init)) {
           return;
         }
-        if (!isIdentifier(init.callee, 'require')) {
-          return;
-        }
-        var arg = init.arguments[0];
-        if (!arg || arg.type !== Syntax.Literal || arg.value !== 'assert') {
-          return;
-        }
-        arg.value = 'power-assert';
-        arg.raw = "'power-assert'";
+        changeAssertToPowerAssert(node.init);
         return estraverse.VisitorOption.Skip;
       }
     }
   });
 
   return ast;
+}
+
+function changeAssertToPowerAssert(node) {
+  var arg = node.arguments[0];
+  arg.value = 'power-assert';
+  if (arg.raw) {
+    arg.raw = "'power-assert'";
+  }
+}
+
+function isRequireAssert(node) {
+  if (!node || node.type !== Syntax.CallExpression) {
+    return false;
+  }
+  if (!isIdentifier(node.callee, 'require')) {
+    return false;
+  }
+  var arg = node.arguments[0];
+  if (!arg || arg.type !== Syntax.Literal || arg.value !== 'assert') {
+    return false;
+  }
+  return true;
 }
 
 function isIdentifier(node, name) {
