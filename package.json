@@ -4,9 +4,12 @@
   "version": "1.0.0",
   "author": "Teppei Sato <teppeis@gmail.com>",
   "main": "index.js",
+  "files": [
+    "index.js"
+  ],
   "scripts": {
     "lint": "eslint index.js 'test/*.js'",
-    "test": "mocha test"
+    "test": "npm run lint && mocha test"
   },
   "dependencies": {
     "estraverse": "^4.2.0"

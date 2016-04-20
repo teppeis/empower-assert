@@ -17,7 +17,6 @@ function empowerAssert(ast) {
           return;
         }
         changeAssertToPowerAssert(node.right);
-        return estraverse.VisitorOption.Skip;
       }
 
       if (node.type === Syntax.VariableDeclarator) {
@@ -28,7 +27,6 @@ function empowerAssert(ast) {
           return;
         }
         changeAssertToPowerAssert(node.init);
-        return estraverse.VisitorOption.Skip;
       }
     }
   });
