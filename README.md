@@ -54,5 +54,5 @@ MIT License: Teppei Sato &lt;teppeis@gmail.com&gt;
 [travis-url]: https://travis-ci.org/teppeis/empower-assert
 [deps-image]: https://david-dm.org/teppeis/empower-assert.svg
 [deps-url]: https://david-dm.org/teppeis/empower-assert
-[node-version]: https://img.shields.io/badge/Node.js%20support-v0.10–v5-brightgreen.svg
+[node-version]: https://img.shields.io/badge/Node.js%20support-v0.12–v5-brightgreen.svg
 [license]: https://img.shields.io/npm/l/empower-assert.svg
