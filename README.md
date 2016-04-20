@@ -48,6 +48,9 @@ console.log(escodegen.generate(transformed));
 
 MIT License: Teppei Sato &lt;teppeis@gmail.com&gt;
 
+This is a port of [babel-plugin-empower-assert](https://github.com/power-assert-js/babel-plugin-empower-assert).  
+Copyright (c) 2016 Takuto Wada, https://github.com/power-assert-js/babel-plugin-empower-assert
+
 [npm-image]: https://img.shields.io/npm/v/empower-assert.svg
 [npm-url]: https://npmjs.org/package/empower-assert
 [travis-image]: https://travis-ci.org/teppeis/empower-assert.svg?branch=master
