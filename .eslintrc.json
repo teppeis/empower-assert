@@ -1,0 +1,6 @@
+{
+  "extends": "teppeis/node",
+  "rules": {
+    "node/no-unsupported-features": [2, {"version": 0.12}]
+  }
+}

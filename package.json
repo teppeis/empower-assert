@@ -5,12 +5,15 @@
   "author": "Teppei Sato <teppeis@gmail.com>",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint index.js 'test/*.js'",
     "test": "mocha test"
   },
   "dependencies": {
     "estraverse": "^4.2.0"
   },
   "devDependencies": {
+    "eslint": "^2.8.0",
+    "eslint-config-teppeis": "^2.0.4",
     "esprima": "^2.7.2",
     "mocha": "^2.4.5"
   },
