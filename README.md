@@ -22,8 +22,8 @@ const empowerAssert = require('empower-assert');
 const acorn = require('acorn');
 const escodegen = require('escodegen');
 
-let source = `
-'use strict';
+let source = 
+`'use strict';
 const assert = require('assert');
 function add(a, b) {
     assert(!isNaN(a));
@@ -41,7 +41,7 @@ console.log(escodegen.generate(transformed));
 //     assert.equal(typeof b, 'number');
 //     assert.ok(!isNaN(b));
 //     return a + b;
-// }`
+// }
 ```
 
 ## License
