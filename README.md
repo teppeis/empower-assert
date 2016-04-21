@@ -19,7 +19,7 @@ $ npm install --save-dev empower-assert
 
 ```js
 const empowerAssert = require('empower-assert');
-const estree = require('estree');
+const acorn = require('acorn');
 const escodegen = require('escodegen');
 
 let source = `
@@ -32,7 +32,7 @@ function add(a, b) {
     return a + b;
 }`;
 
-let transformed = empowerAssert(estree.parse(source));
+let transformed = empowerAssert(acorn.parse(source));
 console.log(escodegen.generate(transformed));
 // 'use strict';
 // const assert = require('power-assert');

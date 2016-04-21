@@ -3,7 +3,7 @@
 var assert = require('assert');
 var fs = require('fs');
 var path = require('path');
-var espree = require('espree');
+var acorn = require('acorn');
 var espurify = require('espurify');
 var empowerAssert = require('../');
 
@@ -14,13 +14,14 @@ function testTransform(fixtureName, extraOptions, extraSuffix) {
     var expectedFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'expected' + suffix + '.js');
     var fixtureSource = fs.readFileSync(fixtureFilepath).toString();
     var parserOptions = {
+      locations: true,
       ecmaVersion: 6,
       sourceType: 'module'
     };
-    var fixtureAst = espree.parse(fixtureSource, parserOptions);
+    var fixtureAst = acorn.parse(fixtureSource, parserOptions);
     var actualAst = espurify(empowerAssert(fixtureAst));
     var expectedSource = fs.readFileSync(expectedFilepath).toString();
-    var expectedAst = espurify(espree.parse(expectedSource, parserOptions));
+    var expectedAst = espurify(acorn.parse(expectedSource, parserOptions));
     assert.deepEqual(actualAst, expectedAst);
   });
 }
