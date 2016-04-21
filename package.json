@@ -1,6 +1,6 @@
 {
   "name": "empower-assert",
-  "description": "Convert assert to power-assert",
+  "description": "Convert assert to power-assert on ESTree AST",
   "version": "1.0.0",
   "author": "Teppei Sato <teppeis@gmail.com>",
   "main": "index.js",
