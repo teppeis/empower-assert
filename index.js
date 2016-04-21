@@ -3,6 +3,12 @@
 var estraverse = require('estraverse');
 var Syntax = estraverse.Syntax;
 
+/**
+ * Change `assert` to `power-assert` destructively.
+ *
+ * @param {Object} ast
+ * @return {Object}
+ */
 function empowerAssert(ast) {
   estraverse.traverse(ast, {
     enter: enter
@@ -10,6 +16,10 @@ function empowerAssert(ast) {
   return ast;
 }
 
+/**
+ * @param {Object} node
+ * @param {Object} parent
+ */
 function enter(node, parent) {
   if (node.type === Syntax.AssignmentExpression) {
     if (node.operator !== '=') {
@@ -50,10 +60,17 @@ function enter(node, parent) {
   }
 }
 
+/**
+ * @param {Object} node A Literal node.
+ */
 function changeAssertToPowerAssert(node) {
   node.value = 'power-assert';
 }
 
+/**
+ * @param {Object} node A CallExpression node.
+ * @return {boolean} true if the node is `require('assert')`.
+ */
 function isRequireAssert(node) {
   if (!node || node.type !== Syntax.CallExpression) {
     return false;
@@ -68,6 +85,11 @@ function isRequireAssert(node) {
   return true;
 }
 
+/**
+ * @param {Object} node
+ * @param {string} name
+ * @return {boolean}
+ */
 function isIdentifier(node, name) {
   return node &&
     node.type === Syntax.Identifier &&
