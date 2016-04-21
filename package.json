@@ -27,12 +27,13 @@
     "type": "git",
     "url": "https://github.com/teppeis/empower-assert.git"
   },
-  "bugs": {
-    "url": "https://github.com/teppeis/empower-assert/issues"
-  },
+  "bugs": "https://github.com/teppeis/empower-assert/issues",
   "keywords": [
     "assert",
-    "power-assert"
+    "assertion",
+    "power-assert",
+    "test",
+    "testing"
   ],
   "license": "MIT"
 }
