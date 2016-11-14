@@ -19,6 +19,7 @@
     "acorn": "^4.0.3",
     "eslint": "^3.10.0",
     "eslint-config-teppeis": "^3.3.0",
+    "eslint-plugin-node": "^2.1.4",
     "espurify": "^1.5.1",
     "mocha": "^3.1.2"
   },
