@@ -3,68 +3,92 @@
 var estraverse = require('estraverse');
 var Syntax = estraverse.Syntax;
 
+var DEFAULT_LIB = 'power-assert';
+
 /**
  * Change `assert` to `power-assert` destructively.
  *
  * @param {Object} ast
+ * @param {string} libName
  * @return {Object}
  */
-function empowerAssert(ast) {
+function empowerAssert(ast, libName) {
+  libName = getLibName(libName);
+
   estraverse.traverse(ast, {
-    enter: enter
+    enter: makeEnter(libName)
   });
   return ast;
 }
 
 /**
- * @param {Object} node
- * @param {Object} parent
+ * @param {string} libName
+ * @return {Function} enter
  */
-function enter(node, parent) {
-  if (node.type === Syntax.AssignmentExpression) {
-    if (node.operator !== '=') {
-      return;
+function makeEnter(libName) {
+  /**
+   * @param {Object} node
+   * @param {Object} parent
+   */
+  return function enter(node, parent) {
+    if (node.type === Syntax.AssignmentExpression) {
+      if (node.operator !== '=') {
+        return;
+      }
+      if (!isIdentifier(node.left, 'assert')) {
+        return;
+      }
+      if (!isRequireAssert(node.right)) {
+        return;
+      }
+      changeAssertToLib(node.right.arguments[0], libName);
     }
-    if (!isIdentifier(node.left, 'assert')) {
-      return;
-    }
-    if (!isRequireAssert(node.right)) {
-      return;
-    }
-    changeAssertToPowerAssert(node.right.arguments[0]);
-  }
 
-  if (node.type === Syntax.VariableDeclarator) {
-    if (!isIdentifier(node.id, 'assert')) {
-      return;
+    if (node.type === Syntax.VariableDeclarator) {
+      if (!isIdentifier(node.id, 'assert')) {
+        return;
+      }
+      if (!isRequireAssert(node.init)) {
+        return;
+      }
+      changeAssertToLib(node.init.arguments[0], libName);
     }
-    if (!isRequireAssert(node.init)) {
-      return;
-    }
-    changeAssertToPowerAssert(node.init.arguments[0]);
-  }
 
-  if (node.type === Syntax.ImportDeclaration) {
-    var source = node.source;
-    if (!source || source.type !== Syntax.Literal || source.value !== 'assert') {
-      return;
+    if (node.type === Syntax.ImportDeclaration) {
+      var source = node.source;
+      if (!source || source.type !== Syntax.Literal || source.value !== 'assert') {
+        return;
+      }
+      var firstSpecifier = node.specifiers[0];
+      if (!firstSpecifier || firstSpecifier.type !== Syntax.ImportDefaultSpecifier) {
+        return;
+      }
+      if (!isIdentifier(firstSpecifier.local, 'assert')) {
+        return;
+      }
+      changeAssertToLib(source, libName);
     }
-    var firstSpecifier = node.specifiers[0];
-    if (!firstSpecifier || firstSpecifier.type !== Syntax.ImportDefaultSpecifier) {
-      return;
-    }
-    if (!isIdentifier(firstSpecifier.local, 'assert')) {
-      return;
-    }
-    changeAssertToPowerAssert(source);
-  }
+  };
 }
 
 /**
  * @param {Object} node A Literal node.
+ * @param {string} value
  */
-function changeAssertToPowerAssert(node) {
-  node.value = 'power-assert';
+function changeAssertToLib(node, value) {
+  var libName = getLibName(value);
+  node.value = libName;
+}
+
+/**
+ * @param {string} libName
+ * @return {string} actual lib name
+ */
+function getLibName(libName) {
+  if (typeof libName === 'string' && libName) {
+    return libName;
+  }
+  return DEFAULT_LIB;
 }
 
 /**
@@ -97,4 +121,5 @@ function isIdentifier(node, name) {
 }
 
 module.exports = empowerAssert;
-empowerAssert.enter = enter;
+empowerAssert.enter = makeEnter(DEFAULT_LIB);
+empowerAssert.makeEnter = makeEnter;

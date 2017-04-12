@@ -22,7 +22,7 @@ const empowerAssert = require('empower-assert');
 const acorn = require('acorn');
 const escodegen = require('escodegen');
 
-let source = 
+let source =
 `'use strict';
 const assert = require('assert');
 function add(a, b) {
@@ -42,13 +42,24 @@ console.log(escodegen.generate(transformed));
 //     assert.ok(!isNaN(b));
 //     return a + b;
 // }
+
+let transformedCustom = empowerAssert(acorn.parse(source), 'custom-lib');
+console.log(escodegen.generate(transformedCustom));
+// 'use strict';
+// const assert = require('custom-lib');
+// function add(a, b) {
+//     assert(!isNaN(a));
+//     assert.equal(typeof b, 'number');
+//     assert.ok(!isNaN(b));
+//     return a + b;
+// }
 ```
 
 ## License
 
 MIT License: Teppei Sato &lt;teppeis@gmail.com&gt;
 
-This is a port of [babel-plugin-empower-assert](https://github.com/power-assert-js/babel-plugin-empower-assert).  
+This is a port of [babel-plugin-empower-assert](https://github.com/power-assert-js/babel-plugin-empower-assert).
 Copyright (c) 2016 Takuto Wada, https://github.com/power-assert-js/babel-plugin-empower-assert
 
 [npm-image]: https://img.shields.io/npm/v/empower-assert.svg
