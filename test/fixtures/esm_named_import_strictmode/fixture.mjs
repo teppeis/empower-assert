@@ -1,8 +1,7 @@
-'use strict';
+import { default as loose } from 'assert';
+const assert = loose.strict;
 
-import assert from 'power-assert';
-
-function add(a, b) {
+function add (a, b) {
     assert(!isNaN(a));
     assert.equal(typeof b, 'number');
     assert.ok(!isNaN(b));
