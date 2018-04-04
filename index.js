@@ -47,13 +47,6 @@ function enter(node, parent) {
     if (!source || source.type !== Syntax.Literal || source.value !== 'assert') {
       return;
     }
-    var firstSpecifier = node.specifiers[0];
-    if (!firstSpecifier || firstSpecifier.type !== Syntax.ImportDefaultSpecifier) {
-      return;
-    }
-    if (!isIdentifier(firstSpecifier.local, 'assert')) {
-      return;
-    }
     changeAssertToPowerAssert(source);
   }
 }
