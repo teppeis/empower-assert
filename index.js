@@ -105,9 +105,7 @@ function isRequireAssert(node) {
  * @return {boolean}
  */
 function isIdentifier(node, name) {
-  return node &&
-    node.type === Syntax.Identifier &&
-    node.name === name;
+  return node && node.type === Syntax.Identifier && node.name === name;
 }
 
 module.exports = empowerAssert;

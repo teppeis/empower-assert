@@ -10,8 +10,18 @@ const empowerAssert = require('../');
 function testTransform(fixtureName, extension) {
   it(fixtureName, () => {
     extension = extension || 'js';
-    const fixtureFilepath = path.resolve(__dirname, 'fixtures', fixtureName, `fixture.${extension}`);
-    const expectedFilepath = path.resolve(__dirname, 'fixtures', fixtureName, `expected.${extension}`);
+    const fixtureFilepath = path.resolve(
+      __dirname,
+      'fixtures',
+      fixtureName,
+      `fixture.${extension}`
+    );
+    const expectedFilepath = path.resolve(
+      __dirname,
+      'fixtures',
+      fixtureName,
+      `expected.${extension}`
+    );
     const fixtureSource = fs.readFileSync(fixtureFilepath).toString();
     const parserOptions = {
       locations: true,
