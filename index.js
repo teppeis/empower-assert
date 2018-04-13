@@ -1,6 +1,7 @@
 'use strict';
 
 var estraverse = require('estraverse');
+
 var Syntax = estraverse.Syntax;
 
 /**
