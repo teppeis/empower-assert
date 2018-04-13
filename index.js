@@ -1,7 +1,8 @@
 'use strict';
 
-var estraverse = require('estraverse');
-var Syntax = estraverse.Syntax;
+const estraverse = require('estraverse');
+
+const {Syntax} = estraverse;
 
 /**
  * Change `assert` to `power-assert` destructively.
@@ -11,7 +12,7 @@ var Syntax = estraverse.Syntax;
  */
 function empowerAssert(ast) {
   estraverse.traverse(ast, {
-    enter: enter
+    enter,
   });
   return ast;
 }
@@ -43,7 +44,7 @@ function enter(node, parent) {
   }
 
   if (node.type === Syntax.ImportDeclaration) {
-    var source = node.source;
+    const {source} = node;
     if (!source || source.type !== Syntax.Literal || source.value !== 'assert') {
       return;
     }
@@ -56,7 +57,7 @@ function enter(node, parent) {
  * @return {boolean} true if `assert` is replaced to `power-assert`.
  */
 function replaceAssertIfMatch(node) {
-  var target;
+  let target;
   if (node === null) {
     return false;
   } else if (node.type === Syntax.CallExpression) {
@@ -91,7 +92,7 @@ function isRequireAssert(node) {
   if (!isIdentifier(node.callee, 'require')) {
     return false;
   }
-  var arg = node.arguments[0];
+  const arg = node.arguments[0];
   if (!arg || arg.type !== Syntax.Literal || arg.value !== 'assert') {
     return false;
   }
@@ -104,9 +105,7 @@ function isRequireAssert(node) {
  * @return {boolean}
  */
 function isIdentifier(node, name) {
-  return node &&
-    node.type === Syntax.Identifier &&
-    node.name === name;
+  return node && node.type === Syntax.Identifier && node.name === name;
 }
 
 module.exports = empowerAssert;
