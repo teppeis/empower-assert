@@ -1,32 +1,32 @@
 'use strict';
 
-var assert = require('assert');
-var fs = require('fs');
-var path = require('path');
-var acorn = require('acorn');
-var espurify = require('espurify');
-var empowerAssert = require('../');
+const assert = require('assert');
+const fs = require('fs');
+const path = require('path');
+const acorn = require('acorn');
+const espurify = require('espurify');
+const empowerAssert = require('../');
 
 function testTransform(fixtureName, extension) {
-  it(fixtureName, function() {
+  it(fixtureName, () => {
     extension = extension || 'js';
-    var fixtureFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'fixture.' + extension);
-    var expectedFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'expected.' + extension);
-    var fixtureSource = fs.readFileSync(fixtureFilepath).toString();
-    var parserOptions = {
+    const fixtureFilepath = path.resolve(__dirname, 'fixtures', fixtureName, `fixture.${extension}`);
+    const expectedFilepath = path.resolve(__dirname, 'fixtures', fixtureName, `expected.${extension}`);
+    const fixtureSource = fs.readFileSync(fixtureFilepath).toString();
+    const parserOptions = {
       locations: true,
       ecmaVersion: 6,
-      sourceType: 'module'
+      sourceType: 'module',
     };
-    var fixtureAst = acorn.parse(fixtureSource, parserOptions);
-    var actualAst = espurify(empowerAssert(fixtureAst));
-    var expectedSource = fs.readFileSync(expectedFilepath).toString();
-    var expectedAst = espurify(acorn.parse(expectedSource, parserOptions));
+    const fixtureAst = acorn.parse(fixtureSource, parserOptions);
+    const actualAst = espurify(empowerAssert(fixtureAst));
+    const expectedSource = fs.readFileSync(expectedFilepath).toString();
+    const expectedAst = espurify(acorn.parse(expectedSource, parserOptions));
     assert.deepEqual(actualAst, expectedAst);
   });
 }
 
-describe('empower-assert', function() {
+describe('empower-assert', () => {
   testTransform('commonjs');
   testTransform('commonjs_singlevar');
   testTransform('commonjs_powerassert');

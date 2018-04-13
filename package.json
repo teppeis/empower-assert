@@ -7,6 +7,9 @@
   "files": [
     "index.js"
   ],
+  "engines": {
+    "node": ">=6"
+  },
   "scripts": {
     "lint": "eslint index.js 'test/*.js'",
     "mocha": "mocha test",
