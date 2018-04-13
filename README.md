@@ -1,6 +1,8 @@
 empower-assert
 ====
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/teppeis/empower-assert.svg)](https://greenkeeper.io/)
+
 Convert [assert](https://nodejs.org/api/assert.html) to [power-assert](https://github.com/power-assert-js/power-assert) on [ESTree AST](https://github.com/estree/estree).
 
 [![NPM version][npm-image]][npm-url]
