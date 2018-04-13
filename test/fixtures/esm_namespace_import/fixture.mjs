@@ -1,4 +1,5 @@
-import * as assert from 'assert';
+import * as ns from 'assert';
+const assert = ns.default;
 
 function add (a, b) {
     assert(!isNaN(a));

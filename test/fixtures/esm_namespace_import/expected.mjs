@@ -1,4 +1,5 @@
-import * as assert from "power-assert";
+import * as ns from 'power-assert';
+const assert = ns.default;
 
 function add(a, b) {
   assert(!isNaN(a));
