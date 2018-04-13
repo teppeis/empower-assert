@@ -1,6 +1,8 @@
 'use strict';
 
-import assert from 'assert';
+var foo = 'FOO',
+    assert = require('assert').strict,
+    bar = 'BAR';
 
 function add (a, b) {
     assert(!isNaN(a));

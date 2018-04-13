@@ -28,20 +28,18 @@ function enter(node, parent) {
     if (!isIdentifier(node.left, 'assert')) {
       return;
     }
-    if (!isRequireAssert(node.right)) {
+    if (replaceAssertIfMatch(node.right)) {
       return;
     }
-    changeAssertToPowerAssert(node.right.arguments[0]);
   }
 
   if (node.type === Syntax.VariableDeclarator) {
     if (!isIdentifier(node.id, 'assert')) {
       return;
     }
-    if (!isRequireAssert(node.init)) {
+    if (replaceAssertIfMatch(node.init)) {
       return;
     }
-    changeAssertToPowerAssert(node.init.arguments[0]);
   }
 
   if (node.type === Syntax.ImportDeclaration) {
@@ -49,15 +47,30 @@ function enter(node, parent) {
     if (!source || source.type !== Syntax.Literal || source.value !== 'assert') {
       return;
     }
-    var firstSpecifier = node.specifiers[0];
-    if (!firstSpecifier || firstSpecifier.type !== Syntax.ImportDefaultSpecifier) {
-      return;
-    }
-    if (!isIdentifier(firstSpecifier.local, 'assert')) {
-      return;
-    }
     changeAssertToPowerAssert(source);
   }
+}
+
+/**
+ * @param {Object} node
+ * @return {boolean} true if `assert` is replaced to `power-assert`.
+ */
+function replaceAssertIfMatch(node) {
+  var target;
+  if (node === null) {
+    return false;
+  } else if (node.type === Syntax.CallExpression) {
+    target = node;
+  } else if (node.type === Syntax.MemberExpression) {
+    target = node.object;
+  } else {
+    return false;
+  }
+  if (isRequireAssert(target)) {
+    changeAssertToPowerAssert(target.arguments[0]);
+    return true;
+  }
+  return false;
 }
 
 /**

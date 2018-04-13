@@ -7,11 +7,11 @@ var acorn = require('acorn');
 var espurify = require('espurify');
 var empowerAssert = require('../');
 
-function testTransform(fixtureName, extraOptions, extraSuffix) {
+function testTransform(fixtureName, extension) {
   it(fixtureName, function() {
-    var suffix = extraSuffix ? '-' + extraSuffix : '';
-    var fixtureFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'fixture.js');
-    var expectedFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'expected' + suffix + '.js');
+    extension = extension || 'js';
+    var fixtureFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'fixture.' + extension);
+    var expectedFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'expected.' + extension);
     var fixtureSource = fs.readFileSync(fixtureFilepath).toString();
     var parserOptions = {
       locations: true,
@@ -30,8 +30,12 @@ describe('empower-assert', function() {
   testTransform('commonjs');
   testTransform('commonjs_singlevar');
   testTransform('commonjs_powerassert');
+  testTransform('commonjs_strictmode');
+  testTransform('commonjs_singlevar_strictmode');
   testTransform('assignment');
   testTransform('assignment_singlevar');
-  testTransform('es6module');
-  testTransform('es6module_powerassert');
+  testTransform('esm_default_binding', 'mjs');
+  testTransform('esm_default_binding_powerassert', 'mjs');
+  testTransform('esm_namespace_import', 'mjs');
+  testTransform('esm_named_import_strictmode', 'mjs');
 });
