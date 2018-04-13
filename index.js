@@ -2,7 +2,7 @@
 
 const estraverse = require('estraverse');
 
-const Syntax = estraverse.Syntax;
+const {Syntax} = estraverse;
 
 /**
  * Change `assert` to `power-assert` destructively.
@@ -12,7 +12,7 @@ const Syntax = estraverse.Syntax;
  */
 function empowerAssert(ast) {
   estraverse.traverse(ast, {
-    enter: enter,
+    enter,
   });
   return ast;
 }
@@ -44,7 +44,7 @@ function enter(node, parent) {
   }
 
   if (node.type === Syntax.ImportDeclaration) {
-    const source = node.source;
+    const {source} = node;
     if (!source || source.type !== Syntax.Literal || source.value !== 'assert') {
       return;
     }
