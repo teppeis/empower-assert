@@ -19,7 +19,7 @@
     "estraverse": "^4.2.0"
   },
   "devDependencies": {
-    "acorn": "^5.6.1",
+    "acorn": "^5.6.2",
     "eslint": "^4.19.1",
     "eslint-config-teppeis": "^6.9.0",
     "espurify": "^1.8.0",
