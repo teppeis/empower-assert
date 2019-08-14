@@ -16,7 +16,7 @@
     "test": "npm run lint && npm run mocha"
   },
   "dependencies": {
-    "estraverse": "^4.2.0"
+    "estraverse": "^4.3.0"
   },
   "devDependencies": {
     "acorn": "^7.0.0",
