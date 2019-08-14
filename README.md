@@ -57,5 +57,5 @@ Copyright (c) 2016 Takuto Wada, https://github.com/power-assert-js/babel-plugin-
 [travis-url]: https://travis-ci.org/teppeis/empower-assert
 [deps-image]: https://david-dm.org/teppeis/empower-assert.svg
 [deps-url]: https://david-dm.org/teppeis/empower-assert
-[node-version]: https://img.shields.io/badge/Node.js%20support-v6,v8,v10-brightgreen.svg
+[node-version]: https://img.shields.io/badge/Node.js%20support-v8,v10,v12-brightgreen.svg
 [license]: https://img.shields.io/npm/l/empower-assert.svg
