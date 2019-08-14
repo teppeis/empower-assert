@@ -22,7 +22,7 @@
     "acorn": "^6.3.0",
     "eslint": "^5.13.0",
     "eslint-config-teppeis": "^9.1.0",
-    "espurify": "^1.8.1",
+    "espurify": "^2.0.1",
     "mocha": "^6.2.0",
     "prettier": "1.16.4"
   },
