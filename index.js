@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
-const estraverse = require('estraverse');
+const estraverse = require("estraverse");
 
-const {Syntax} = estraverse;
+const { Syntax } = estraverse;
 
 /**
  * Change `assert` to `power-assert` destructively.
@@ -23,10 +23,10 @@ function empowerAssert(ast) {
  */
 function enter(node, parent) {
   if (node.type === Syntax.AssignmentExpression) {
-    if (node.operator !== '=') {
+    if (node.operator !== "=") {
       return;
     }
-    if (!isIdentifier(node.left, 'assert')) {
+    if (!isIdentifier(node.left, "assert")) {
       return;
     }
     if (replaceAssertIfMatch(node.right)) {
@@ -35,7 +35,7 @@ function enter(node, parent) {
   }
 
   if (node.type === Syntax.VariableDeclarator) {
-    if (!isIdentifier(node.id, 'assert')) {
+    if (!isIdentifier(node.id, "assert")) {
       return;
     }
     if (replaceAssertIfMatch(node.init)) {
@@ -44,8 +44,8 @@ function enter(node, parent) {
   }
 
   if (node.type === Syntax.ImportDeclaration) {
-    const {source} = node;
-    if (!source || source.type !== Syntax.Literal || source.value !== 'assert') {
+    const { source } = node;
+    if (!source || source.type !== Syntax.Literal || source.value !== "assert") {
       return;
     }
     changeAssertToPowerAssert(source);
@@ -78,7 +78,7 @@ function replaceAssertIfMatch(node) {
  * @param {Object} node A Literal node.
  */
 function changeAssertToPowerAssert(node) {
-  node.value = 'power-assert';
+  node.value = "power-assert";
 }
 
 /**
@@ -89,11 +89,11 @@ function isRequireAssert(node) {
   if (!node || node.type !== Syntax.CallExpression) {
     return false;
   }
-  if (!isIdentifier(node.callee, 'require')) {
+  if (!isIdentifier(node.callee, "require")) {
     return false;
   }
   const arg = node.arguments[0];
-  if (!arg || arg.type !== Syntax.Literal || arg.value !== 'assert') {
+  if (!arg || arg.type !== Syntax.Literal || arg.value !== "assert") {
     return false;
   }
   return true;
