@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "acorn": "^7.1.0",
-    "eslint": "^6.7.2",
+    "eslint": "^6.8.0",
     "eslint-config-teppeis": "^10.3.1",
     "espurify": "^2.0.1",
     "mocha": "^6.2.2",
