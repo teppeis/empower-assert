@@ -23,7 +23,7 @@
     "eslint": "^6.8.0",
     "eslint-config-teppeis": "^10.3.1",
     "espurify": "^2.0.1",
-    "mocha": "^7.2.0",
+    "mocha": "^10.7.3",
     "prettier": "1.19.1"
   },
   "homepage": "https://github.com/teppeis/empower-assert",
