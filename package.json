@@ -20,11 +20,11 @@
   },
   "devDependencies": {
     "acorn": "^7.4.1",
-    "eslint": "^6.8.0",
-    "eslint-config-teppeis": "^10.3.1",
+    "eslint": "^9.13.0",
+    "eslint-config-teppeis": "^19.1.2",
     "espurify": "^2.0.1",
     "mocha": "^7.2.0",
-    "prettier": "1.19.1"
+    "prettier": "3.3.3"
   },
   "homepage": "https://github.com/teppeis/empower-assert",
   "repository": {
